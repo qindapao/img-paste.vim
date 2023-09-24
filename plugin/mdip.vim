@@ -250,5 +250,9 @@ if !exists('g:mdip_tmpname')
     let g:mdip_tmpname = 'tmp'
 endif
 if !exists('g:mdip_imgname')
-    let g:mdip_imgname = 'image'
+    if exists('g:img_paste_zim')
+        let g:mdip_imgname = expand('%:t:r')
+    else
+        let g:mdip_imgname = 'image'
+    endif
 endif

@@ -1,19 +1,19 @@
 # img-paste.vim
-Yet simple tool to paste images into markdown files
+Yet simple tool to paste images into markdown files, This branch is different from the main branch. Copy the image to the directory of the zim file.
 
-## Use Case
+## 1 Use Case
 You are editing a markdown file and have an image on the clipboard and want to paste it into the document as the text `![](img/image1.png)`. Instead of first copying it to that directory, you want to do it with a single `<leader>p` key press in Vim. So it hooks `<leader>p`, checks if you are editing a Markdown file, saves the image from the clipboard to the location  `img/image1.png`, and inserts `![](img/image1.png)` into the file.
 
 By default, the location of the saved file (`img/image1.png`) and the in-text reference (`![](img/image1.png`) are identical. You can change this behavior by specyfing an absolute path to save the file (`let g:mdip_imgdir_absolute = /absolute/path/to/imgdir` on linux) and a different path for in-text references (`let g:mdip_imgdir_intext = /relative/path/to/imgdir` on linux). 
 
-## Installation
+## 2 Installation
 
 Using Vundle
 ```
 Plugin 'img-paste-devs/img-paste.vim'
 ```
 
-## Usage
+## 3 Usage
 Add to .vimrc
 ```
 autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownClipboardImage()<CR>
@@ -22,7 +22,7 @@ autocmd FileType markdown nmap <buffer><silent> <leader>p :call mdip#MarkdownCli
 " let g:mdip_imgname = 'image'
 ```
 
-### Extend to other markup languages ###
+### 3.1 Extend to other markup languages ###
 Simply add a custom paste function that accepts the relative path to the image as an argument, and set `g:PasteImageFunction` to the name of your function. E.g. 
 ```
 function! g:LatexPasteImage(relpath)
@@ -54,11 +54,11 @@ autocmd FileType markdown,tex nmap <buffer><silent> <leader>p :call mdip#Markdow
 
 PRs welcome
 
-### For linux user
+### 3.2 For linux user
 This plugin gets clipboard content by running the `xclip` command.
 
 install `xclip` first.
 
-## Acknowledgements
+## 4 Acknowledgements
 I'm not yet perfect at writing vim plugins but I managed to do it. Thanks to [Karl Yngve Lervåg](https://vi.stackexchange.com/users/21/karl-yngve-lerv%C3%A5g) and [Rich](https://vi.stackexchange.com/users/343/rich) for help on [vi.stackexchange.com](https://vi.stackexchange.com/questions/14114/paste-link-to-image-in-clipboard-when-editing-markdown) where they proposed a solution for my use case.
 
