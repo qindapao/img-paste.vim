@@ -185,6 +185,14 @@ function! g:MarkdownPasteImage(relpath)
         execute "normal! vt]\<C-g>"
 endfunction
 
+function! g:ZimwikiPasteImage(relpath)
+        execute "normal! i{{.\\"
+        let ipos = getcurpos()
+        execute "normal! a" . a:relpath . "}}"
+        call setpos('.', ipos)
+        execute "normal! vt]\<C-g>"
+endfunction
+
 function! g:LatexPasteImage(relpath)
     execute "normal! i\\includegraphics{" . a:relpath . "}\r\\caption{I"
     let ipos = getcurpos()
@@ -197,7 +205,9 @@ function! g:EmptyPasteImage(relpath)
     execute "normal! i" . a:relpath 
 endfunction
 
-let g:PasteImageFunction = 'g:MarkdownPasteImage'
+if !exists('g:PasteImageFunction')
+    let g:PasteImageFunction = 'g:MarkdownPasteImage'
+endif
 
 function! mdip#MarkdownClipboardImage()
     " detect os: https://vi.stackexchange.com/questions/2572/detect-os-in-vimscript
@@ -237,9 +247,6 @@ endfunction
 
 if !exists('g:mdip_imgdir') && !exists('g:mdip_imgdir_absolute')
     let g:mdip_imgdir = 'img'
-    if exists('g:img_paste_zim')
-        let g:mdip_imgdir = expand('%:t:r')
-    endif
 endif
 "allow absolute paths. E.g., on linux: /home/path/to/imgdir/
 if exists('g:mdip_imgdir_absolute')
