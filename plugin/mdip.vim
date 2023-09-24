@@ -177,7 +177,7 @@ function! s:InputName()
     return name
 endfunction
 
-function! g:MarkdownPasteImage(relpath, img_filename)
+function! g:MarkdownPasteImage(relpath)
         execute "normal! i![" . g:mdip_tmpname[0:0]
         let ipos = getcurpos()
         execute "normal! a" . g:mdip_tmpname[1:] . "](" . a:relpath . ")"
@@ -185,10 +185,11 @@ function! g:MarkdownPasteImage(relpath, img_filename)
         execute "normal! vt]\<C-g>"
 endfunction
 
-function! g:ZimwikiPasteImage(relpath, img_filename)
+function! g:ZimwikiPasteImage(relpath)
         execute "normal! i{{.\\"
         let ipos = getcurpos()
-        execute "normal! a" . a:img_filename . "}}"
+        let last_part = matchstr(a:relpath, '[^/\\]*$')
+        execute "normal! a" . last_part . "}}"
         call setpos('.', ipos)
         execute "normal! vt]\<C-g>"
 endfunction
@@ -239,8 +240,7 @@ function! mdip#MarkdownClipboardImage()
         " let relpath = s:SaveNewFile(g:mdip_imgdir, tmpfile)
         let extension = split(tmpfile, '\.')[-1]
         let relpath = g:mdip_imgdir_intext . '/' . g:mdip_tmpname . '.' . extension
-        let img_filename = g:mdip_tmpname . '.' . extension
-        if call(get(g:, 'PasteImageFunction'), [relpath], [img_filename])
+        if call(get(g:, 'PasteImageFunction'), [relpath])
             return
         endif
     endif
