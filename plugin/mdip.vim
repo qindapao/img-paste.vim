@@ -188,7 +188,7 @@ endfunction
 function! g:ZimwikiPasteImage(relpath)
         execute "normal! i{{.\\"
         let ipos = getcurpos()
-        execute "normal! a" . a:relpath . "}}"
+        execute "normal! a" . g:mdip_tmpname . '.' . extension . "}}"
         call setpos('.', ipos)
         execute "normal! vt]\<C-g>"
 endfunction
