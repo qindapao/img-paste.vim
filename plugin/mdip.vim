@@ -237,6 +237,9 @@ endfunction
 
 if !exists('g:mdip_imgdir') && !exists('g:mdip_imgdir_absolute')
     let g:mdip_imgdir = 'img'
+    if exists('g:img_paste_zim')
+        let g:mdip_imgdir = expand('%:t:r')
+    endif
 endif
 "allow absolute paths. E.g., on linux: /home/path/to/imgdir/
 if exists('g:mdip_imgdir_absolute')
@@ -250,9 +253,5 @@ if !exists('g:mdip_tmpname')
     let g:mdip_tmpname = 'tmp'
 endif
 if !exists('g:mdip_imgname')
-    if exists('g:img_paste_zim')
-        let g:mdip_imgname = expand('%:t:r')
-    else
-        let g:mdip_imgname = 'image'
-    endif
+    let g:mdip_imgname = 'image'
 endif
